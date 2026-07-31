@@ -84,7 +84,7 @@ export default function AdminDashboard({ onLogout, activeTab, setActiveTab, chil
         {/* User Info & Back to Public Button */}
         <div>
           <button
-            onClick={() => window.location.reload()}
+            onClick={onLogout}
             className="btn btn-secondary"
             style={{ width: '100%', marginBottom: '16px', fontSize: '0.82rem', padding: '8px' }}
           >

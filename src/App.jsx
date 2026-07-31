@@ -26,13 +26,26 @@ export default function App() {
   const [adminWaList, setAdminWaList] = useState([]);
   const [selectedMobil, setSelectedMobil] = useState(null);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
-  const [adminTab, setAdminTab] = useState('overview');
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(() => {
+    return localStorage.getItem('bosauto_admin_loggedin') === 'true';
+  });
+  const [adminTab, setAdminTab] = useState(() => {
+    return localStorage.getItem('bosauto_admin_tab') || 'overview';
+  });
 
   // Modals state
   const [activeInvoice, setActiveInvoice] = useState(null);
   const [activeContract, setActiveContract] = useState(null);
   const [activeInspeksiMobil, setActiveInspeksiMobil] = useState(null);
+
+  // Simpan status admin login & tab ke localStorage setiap ada perubahan
+  useEffect(() => {
+    localStorage.setItem('bosauto_admin_loggedin', isAdminLoggedIn ? 'true' : 'false');
+  }, [isAdminLoggedIn]);
+
+  useEffect(() => {
+    localStorage.setItem('bosauto_admin_tab', adminTab);
+  }, [adminTab]);
 
   const refreshData = async () => {
     try {
