@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Plus, Download, TrendingUp, TrendingDown, DollarSign } from 'lucide-react';
+import { Plus, Download, TrendingUp, TrendingDown, DollarSign, Search, Filter, MoreVertical } from 'lucide-react';
 import { addPembukuan } from '../services/firestoreService';
 
 export default function Pembukuan({ pembukuanList = [], onRefresh }) {
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   const [formData, setFormData] = useState({
     jenis: 'Pemasukan',
     kategori: 'Sewa Armada',

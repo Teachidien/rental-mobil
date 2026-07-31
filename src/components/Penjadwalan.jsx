@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Plus, AlertCircle, Phone, User, Car, FileText, PenTool } from 'lucide-react';
+import { Plus, AlertCircle, Phone, User, Car, FileText, PenTool, Search, Filter, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import { addJadwalSewa } from '../services/firestoreService';
 
 export default function Penjadwalan({ jadwalList = [], armadaList = [], onRefresh, onOpenInvoice, onOpenContract }) {
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   const [formData, setFormData] = useState({
     armadaId: '',
     namaPenyewa: '',
@@ -16,6 +17,13 @@ export default function Penjadwalan({ jadwalList = [], armadaList = [], onRefres
 
   const safeJadwal = Array.isArray(jadwalList) ? jadwalList : [];
   const safeArmada = Array.isArray(armadaList) ? armadaList : [];
+
+  const totalAktif = safeJadwal.length;
+  const terlambatKembali = safeJadwal.filter(j => {
+    if (!j.tanggalKembali) return false;
+    return new Date(j.tanggalKembali).getTime() < new Date().getTime();
+  }).length;
+  const unitTersedia = safeArmada.filter(a => a.status === 'Tersedia').length;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
