@@ -14,17 +14,23 @@ export default function Pembukuan({ pembukuanList = [], onRefresh }) {
     tanggal: new Date().toISOString().split('T')[0]
   });
 
-  const safePembukuan = Array.isArray(pembukuanList) ? pembukuanList : [];
+  const safeList = Array.isArray(pembukuanList) ? pembukuanList : [];
 
-  const totalPemasukan = safePembukuan
-    .filter(p => p && p.jenis === 'Pemasukan')
+  const totalPemasukan = safeList
+    .filter(p => p && (p.jenis === 'Pemasukan' || !p.jenis))
     .reduce((acc, curr) => acc + Number(curr.jumlah || 0), 0);
 
-  const totalPengeluaran = safePembukuan
+  const totalPengeluaran = safeList
     .filter(p => p && p.jenis === 'Pengeluaran')
     .reduce((acc, curr) => acc + Number(curr.jumlah || 0), 0);
 
   const labaBersih = totalPemasukan - totalPengeluaran;
+
+  const filteredList = safeList.filter(p => {
+    const matchesKet = (p.keterangan || '').toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesKat = (p.kategori || '').toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesKet || matchesKat;
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
