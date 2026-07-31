@@ -48,43 +48,43 @@ export default function KalenderAvailability({ mobil, jadwalList = [], onSelectR
   const daysOfWeek = ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"];
 
   return (
-    <div className="glass-panel" style={{ padding: '20px', marginTop: '16px', background: 'rgba(15, 23, 42, 0.7)' }}>
+    <div style={{ padding: '12px 0', borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)', margin: '14px 0' }}>
       {/* Header Navigasi Bulan */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <CalendarIcon size={18} color="var(--accent-secondary)" />
-          <h4 style={{ margin: 0, fontSize: '0.95rem' }}>
-            Jadwal Availability: <span style={{ color: 'var(--accent-secondary)' }}>{mobil.nama}</span>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <CalendarIcon size={16} color="var(--accent-primary)" />
+          <h4 style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-main)', fontWeight: 700 }}>
+            {mobil.nama || 'Vehicle'} Availability
           </h4>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <button onClick={handlePrevMonth} className="btn btn-secondary" style={{ padding: '4px 8px', fontSize: '0.8rem' }}>
-            <ChevronLeft size={16} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <button onClick={handlePrevMonth} className="btn btn-secondary" style={{ padding: '2px 6px', fontSize: '0.75rem' }}>
+            <ChevronLeft size={14} />
           </button>
-          <span style={{ fontWeight: 600, fontSize: '0.88rem', minWidth: '110px', textAlign: 'center' }}>
+          <span style={{ fontWeight: 700, fontSize: '0.8rem', minWidth: '100px', textAlign: 'center', color: 'var(--text-main)' }}>
             {monthNames[month]} {year}
           </span>
-          <button onClick={handleNextMonth} className="btn btn-secondary" style={{ padding: '4px 8px', fontSize: '0.8rem' }}>
-            <ChevronRight size={16} />
+          <button onClick={handleNextMonth} className="btn btn-secondary" style={{ padding: '2px 6px', fontSize: '0.75rem' }}>
+            <ChevronRight size={14} />
           </button>
         </div>
       </div>
 
       {/* Grid Nama Hari */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '4px', textAlign: 'center', marginBottom: '8px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '2px', textAlign: 'center', marginBottom: '6px' }}>
         {daysOfWeek.map((day, idx) => (
-          <span key={idx} style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)' }}>
+          <span key={idx} style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--text-muted)' }}>
             {day}
           </span>
         ))}
       </div>
 
-      {/* Grid Tanggal Kalender */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '6px' }}>
+      {/* Grid Tanggal Kalender Light Mode */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '4px' }}>
         {/* Blank Offset Days */}
         {[...Array(firstDayOfMonth)].map((_, i) => (
-          <div key={`blank-${i}`} style={{ height: '36px' }}></div>
+          <div key={`blank-${i}`} style={{ height: '30px' }}></div>
         ))}
 
         {/* Days in Month */}
@@ -99,39 +99,25 @@ export default function KalenderAvailability({ mobil, jadwalList = [], onSelectR
               disabled={booked}
               onClick={() => onSelectRange && onSelectRange(dateStr)}
               style={{
-                height: '36px',
-                borderRadius: '6px',
-                border: 'none',
-                background: booked ? 'rgba(239, 68, 68, 0.2)' : 'rgba(16, 185, 129, 0.15)',
-                color: booked ? 'var(--status-rented)' : 'var(--status-available)',
-                border: booked ? '1px solid rgba(239,68,68,0.4)' : '1px solid rgba(16,185,129,0.3)',
-                fontWeight: 600,
-                fontSize: '0.82rem',
+                height: '30px',
+                borderRadius: '4px',
+                border: booked ? '1px solid #fecaca' : '1px solid #a7f3d0',
+                background: booked ? '#fee2e2' : '#d1fae5',
+                color: booked ? '#991b1b' : '#065f46',
+                fontWeight: 700,
+                fontSize: '0.78rem',
                 cursor: booked ? 'not-allowed' : 'pointer',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                transition: 'all 0.2s ease',
-                position: 'relative'
+                transition: 'all 0.15s ease'
               }}
-              title={booked ? `Mobil ${mobil.nama} sudah dibooking pada tanggal ini` : `Klik untuk pilih tanggal ${dateStr}`}
+              title={booked ? `Mobil ${mobil.nama} sudah dibooking` : `Pilih tanggal ${dateStr}`}
             >
               {dayNumber}
             </button>
           );
         })}
-      </div>
-
-      {/* Keterangan Warna Badges */}
-      <div style={{ display: 'flex', gap: '16px', marginTop: '16px', paddingTop: '12px', borderTop: '1px solid var(--border-color)', fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-        <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-          <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: 'var(--status-available)', display: 'inline-block' }}></span>
-          🟢 Tersedia (Bisa Sewa)
-        </span>
-        <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-          <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: 'var(--status-rented)', display: 'inline-block' }}></span>
-          🔴 Disewa (Booked)
-        </span>
       </div>
     </div>
   );

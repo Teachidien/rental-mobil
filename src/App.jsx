@@ -113,11 +113,31 @@ export default function App() {
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
           <Navbar onOpenLogin={() => setIsLoginOpen(true)} />
 
-          <main style={{ flex: 1 }}>
+          <main style={{ flex: 1, background: '#f8fafc' }}>
             <Hero />
-            <KatalogMobil armadaList={armadaList} onSelectMobil={handleSelectMobil} />
-            <KalkulatorSewa selectedMobil={selectedMobil} armadaList={armadaList} jadwalList={jadwalList} />
-            <FAQ />
+
+            {/* Public Section Layout: 2-Column Desktop Grid (Fleet Catalog + Booking Engine Sidebar) */}
+            <div className="container" style={{ padding: '40px 20px 60px 20px' }}>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+                gap: '32px',
+                alignItems: 'start'
+              }}>
+                {/* Left Column: Available Fleet List */}
+                <div style={{ flex: 1 }}>
+                  <KatalogMobil armadaList={armadaList} onSelectMobil={handleSelectMobil} />
+                </div>
+
+                {/* Right Column: Sticky Booking Engine & Hotel Availability Calendar Sidebar */}
+                <div style={{ width: '100%', maxWidth: '420px', position: 'sticky', top: '90px' }}>
+                  <KalkulatorSewa selectedMobil={selectedMobil} armadaList={armadaList} jadwalList={jadwalList} />
+                </div>
+              </div>
+
+              <FAQ />
+            </div>
+
             <TestimoniFooter />
           </main>
 

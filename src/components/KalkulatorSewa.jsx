@@ -75,164 +75,113 @@ Apakah unit ini tersedia pada tanggal tersebut?`;
   };
 
   return (
-    <section id="kalkulator" style={{ padding: '40px 0 60px 0', background: 'rgba(255,255,255,0.01)' }}>
-      <div className="container">
-        <div className="glass-panel" style={{ padding: '32px', maxWidth: '880px', margin: '0 auto' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px', borderBottom: '1px solid var(--border-color)', paddingBottom: '16px' }}>
-            <div style={{ background: 'var(--accent-glow)', padding: '10px', borderRadius: '10px' }}>
-              <Calculator color="var(--accent-primary)" size={24} />
-            </div>
-            <div>
-              <h3 style={{ fontSize: '1.4rem' }}>Kalkulator Sewa & Direct Booking</h3>
-              <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)' }}>Cek tanggal kosong pada kalender dan hitung estimasi biaya pasti</p>
-            </div>
-          </div>
+    <div style={{
+      background: '#ffffff',
+      border: '1px solid var(--border-color)',
+      borderRadius: '12px',
+      padding: '24px',
+      boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)'
+    }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px', borderBottom: '1px solid var(--border-color)', paddingBottom: '14px' }}>
+        <Calculator color="var(--accent-primary)" size={22} />
+        <h3 style={{ fontSize: '1.25rem', color: 'var(--text-main)', margin: 0, fontWeight: 700 }}>Booking Engine</h3>
+      </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
-            {/* Form Input Kalkulator */}
-            <div>
-              <div className="form-group">
-                <label className="form-label">Pilih Unit Mobil</label>
-                <select
-                  className="form-select"
-                  value={mobil ? mobil.id : ''}
-                  onChange={(e) => {
-                    const selected = safeArmada.find(m => m.id === e.target.value);
-                    setMobil(selected);
-                  }}
-                >
-                  {safeArmada.map(m => (
-                    <option key={m.id} value={m.id}>
-                      {m.nama} - Rp {Number(m.harga || 0).toLocaleString('id-ID')}/hr
-                    </option>
-                  ))}
-                </select>
-              </div>
+      {/* Select Mobil & Form */}
+      <div className="form-group">
+        <label className="form-label">Selected Vehicle</label>
+        <select
+          className="form-select"
+          value={mobil ? mobil.id : ''}
+          onChange={(e) => {
+            const selected = safeArmada.find(m => m.id === e.target.value);
+            setMobil(selected);
+          }}
+        >
+          {safeArmada.map(m => (
+            <option key={m.id} value={m.id}>
+              {m.nama} - Rp {Number(m.harga || 0).toLocaleString('id-ID')}/day
+            </option>
+          ))}
+        </select>
+      </div>
 
-              {/* Kalender Availability Interaktif */}
-              <KalenderAvailability 
-                mobil={mobil} 
-                jadwalList={jadwalList} 
-                onSelectRange={(selectedDate) => setTanggalSewa(selectedDate)}
-              />
+      {/* Kalender Availability */}
+      <KalenderAvailability 
+        mobil={mobil} 
+        jadwalList={jadwalList} 
+        onSelectRange={(selectedDate) => setTanggalSewa(selectedDate)}
+      />
 
-              <div className="form-group" style={{ marginTop: '16px' }}>
-                <label className="form-label">Nama Lengkap Anda</label>
-                <input
-                  type="text"
-                  placeholder="Contoh: Budi Santoso"
-                  className="form-input"
-                  value={namaPenyewa}
-                  onChange={(e) => setNamaPenyewa(e.target.value)}
-                />
-              </div>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginTop: '16px' }}>
+        <div className="form-group">
+          <label className="form-label">Pick Up</label>
+          <input
+            type="date"
+            className="form-input"
+            value={tanggalSewa}
+            onChange={(e) => setTanggalSewa(e.target.value)}
+          />
+        </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                <div className="form-group">
-                  <label className="form-label">Tanggal Sewa Mulai</label>
-                  <input
-                    type="date"
-                    className="form-input"
-                    value={tanggalSewa}
-                    onChange={(e) => setTanggalSewa(e.target.value)}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label className="form-label">Durasi (Hari)</label>
-                  <input
-                    type="number"
-                    min="1"
-                    className="form-input"
-                    value={durasiHari}
-                    onChange={(e) => setDurasiHari(Math.max(1, parseInt(e.target.value) || 1))}
-                  />
-                </div>
-              </div>
-
-              {/* Add-ons Checkbox Options */}
-              <div style={{ marginTop: '16px' }}>
-                <label className="form-label" style={{ marginBottom: '8px', display: 'block' }}>Fitur Opsional (Add-on)</label>
-                
-                <label style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', fontSize: '0.9rem', cursor: 'pointer' }}>
-                  <input
-                    type="checkbox"
-                    checked={denganDriver}
-                    onChange={(e) => setDenganDriver(e.target.checked)}
-                  />
-                  <span>+ Supir Berpengalaman (+Rp 150.000/hari)</span>
-                </label>
-
-                <label style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', fontSize: '0.9rem', cursor: 'pointer' }}>
-                  <input
-                    type="checkbox"
-                    checked={antarJemputBandara}
-                    onChange={(e) => setAntarJemputBandara(e.target.checked)}
-                  />
-                  <span>+ Antar-Jemput Bandara (+Rp 100.000)</span>
-                </label>
-
-                <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.9rem', cursor: 'pointer' }}>
-                  <input
-                    type="checkbox"
-                    checked={childSeat}
-                    onChange={(e) => setChildSeat(e.target.checked)}
-                  />
-                  <span>+ Kursi Balita / Child Safety Seat (+Rp 50.000/hari)</span>
-                </label>
-              </div>
-            </div>
-
-            {/* Rincian Total Biaya */}
-            <div className="glass-panel" style={{ padding: '20px', background: 'rgba(0,0,0,0.2)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-              <div>
-                <h4 style={{ marginBottom: '16px', borderBottom: '1px solid var(--border-color)', paddingBottom: '8px' }}>Rincian Biaya Transparan</h4>
-                
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                  <span>Sewa Base ({durasiHari} Hari):</span>
-                  <span>Rp {hargaBase.toLocaleString('id-ID')}</span>
-                </div>
-
-                {denganDriver && (
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                    <span>Jasa Driver:</span>
-                    <span>Rp {biayaDriver.toLocaleString('id-ID')}</span>
-                  </div>
-                )}
-
-                {antarJemputBandara && (
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                    <span>Antar-Jemput Bandara:</span>
-                    <span>Rp {biayaBandara.toLocaleString('id-ID')}</span>
-                  </div>
-                )}
-
-                {childSeat && (
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                    <span>Child Seat:</span>
-                    <span>Rp {biayaChildSeat.toLocaleString('id-ID')}</span>
-                  </div>
-                )}
-
-                <div style={{ marginTop: '20px', paddingTop: '16px', borderTop: '1px dashed var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontWeight: 600 }}>Total Estimasi:</span>
-                  <span style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--status-available)' }}>
-                    Rp {totalBiaya.toLocaleString('id-ID')}
-                  </span>
-                </div>
-              </div>
-
-              <button
-                onClick={handlePesanWhatsApp}
-                className="btn btn-success"
-                style={{ width: '100%', marginTop: '24px', padding: '12px', fontSize: '1rem' }}
-              >
-                <MessageCircle size={18} /> Sewa Sekarang via WhatsApp
-              </button>
-            </div>
-          </div>
+        <div className="form-group">
+          <label className="form-label">Duration (Days)</label>
+          <input
+            type="number"
+            min="1"
+            className="form-input"
+            value={durasiHari}
+            onChange={(e) => setDurasiHari(Math.max(1, parseInt(e.target.value) || 1))}
+          />
         </div>
       </div>
-    </section>
+
+      {/* Add-ons Checkbox */}
+      <div style={{ marginTop: '12px', paddingTop: '12px', borderTop: '1px solid var(--border-color)' }}>
+        <label className="form-label" style={{ marginBottom: '10px', fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>ADD-ONS</label>
+        
+        <label style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', border: '1px solid var(--border-color)', borderRadius: '6px', marginBottom: '8px', cursor: 'pointer', fontSize: '0.85rem' }}>
+          <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <input type="checkbox" checked={denganDriver} onChange={(e) => setDenganDriver(e.target.checked)} />
+            <span>Professional Driver</span>
+          </span>
+          <span style={{ fontWeight: 600, color: 'var(--text-muted)' }}>+Rp 150k</span>
+        </label>
+
+        <label style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', border: '1px solid var(--border-color)', borderRadius: '6px', marginBottom: '8px', cursor: 'pointer', fontSize: '0.85rem' }}>
+          <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <input type="checkbox" checked={antarJemputBandara} onChange={(e) => setAntarJemputBandara(e.target.checked)} />
+            <span>Airport Transfer</span>
+          </span>
+          <span style={{ fontWeight: 600, color: 'var(--text-muted)' }}>+Rp 100k</span>
+        </label>
+
+        <label style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', border: '1px solid var(--border-color)', borderRadius: '6px', cursor: 'pointer', fontSize: '0.85rem' }}>
+          <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <input type="checkbox" checked={childSeat} onChange={(e) => setChildSeat(e.target.checked)} />
+            <span>Child Safety Seat</span>
+          </span>
+          <span style={{ fontWeight: 600, color: 'var(--text-muted)' }}>+Rp 50k</span>
+        </label>
+      </div>
+
+      {/* Total Cost Display */}
+      <div style={{ marginTop: '20px', paddingTop: '16px', borderTop: '1px dashed var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div>
+          <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', display: 'block' }}>Estimated Total ({durasiHari} Days)</span>
+          <span style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--accent-primary)' }}>
+            Rp {totalBiaya.toLocaleString('id-ID')}
+          </span>
+        </div>
+      </div>
+
+      <button
+        onClick={handlePesanWhatsApp}
+        className="btn btn-success"
+        style={{ width: '100%', marginTop: '16px', padding: '12px', fontSize: '0.95rem', fontWeight: 700 }}
+      >
+        <MessageCircle size={18} /> BOOK VIA WHATSAPP
+      </button>
+    </div>
   );
 }
