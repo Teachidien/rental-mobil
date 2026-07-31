@@ -12,6 +12,7 @@ import ManajemenArmada from './components/ManajemenArmada';
 import Penjadwalan from './components/Penjadwalan';
 import Pembukuan from './components/Pembukuan';
 import PengaturanWaAdmin from './components/PengaturanWaAdmin';
+import ManajemenUserAdmin from './components/ManajemenUserAdmin';
 import FloatingWhatsApp from './components/FloatingWhatsApp';
 import DigitalInvoiceModal from './components/DigitalInvoiceModal';
 import EContractModal from './components/EContractModal';
@@ -120,6 +121,10 @@ export default function App() {
               adminWaList={adminWaList} 
               onRefresh={refreshData} 
             />
+          )}
+
+          {adminTab === 'user_admin' && (
+            <ManajemenUserAdmin />
           )}
         </AdminDashboard>
       ) : (
