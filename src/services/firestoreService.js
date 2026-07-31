@@ -140,3 +140,14 @@ export const addPembukuan = async (transaksiData) => {
     createdAt: serverTimestamp()
   });
 };
+
+/* ==================== MULTI-ADMIN WA SERVICES ==================== */
+export const getAdminWaList = async () => {
+  try {
+    const snapshot = await getDocs(collection(db, 'admin_wa'));
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  } catch (error) {
+    console.warn('Gagal mengambil data admin WA:', error);
+    return [];
+  }
+};

@@ -11,17 +11,19 @@ import AdminOverview from './components/AdminOverview';
 import ManajemenArmada from './components/ManajemenArmada';
 import Penjadwalan from './components/Penjadwalan';
 import Pembukuan from './components/Pembukuan';
+import PengaturanWaAdmin from './components/PengaturanWaAdmin';
 import FloatingWhatsApp from './components/FloatingWhatsApp';
 import DigitalInvoiceModal from './components/DigitalInvoiceModal';
 import EContractModal from './components/EContractModal';
 import InspeksiMobilModal from './components/InspeksiMobilModal';
 import { AuthProvider } from './context/AuthContext';
-import { getArmadaList, getJadwalSewa, getPembukuan } from './services/firestoreService';
+import { getArmadaList, getJadwalSewa, getPembukuan, getAdminWaList } from './services/firestoreService';
 
 export default function App() {
   const [armadaList, setArmadaList] = useState([]);
   const [jadwalList, setJadwalList] = useState([]);
   const [pembukuanList, setPembukuanList] = useState([]);
+  const [adminWaList, setAdminWaList] = useState([]);
   const [selectedMobil, setSelectedMobil] = useState(null);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
@@ -40,6 +42,8 @@ export default function App() {
       setJadwalList(jadwal);
       const pembukuan = await getPembukuan();
       setPembukuanList(pembukuan);
+      const waList = await getAdminWaList();
+      setAdminWaList(waList);
     } catch (err) {
       console.error('Error refreshing data:', err);
     }
@@ -97,6 +101,13 @@ export default function App() {
               onRefresh={refreshData} 
             />
           )}
+
+          {adminTab === 'wa_admin' && (
+            <PengaturanWaAdmin 
+              adminWaList={adminWaList} 
+              onRefresh={refreshData} 
+            />
+          )}
         </AdminDashboard>
       ) : (
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
@@ -110,7 +121,7 @@ export default function App() {
             <TestimoniFooter />
           </main>
 
-          <FloatingWhatsApp />
+          <FloatingWhatsApp adminWaList={adminWaList} />
 
           <LoginModal
             isOpen={isLoginOpen}

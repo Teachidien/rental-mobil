@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { MessageCircle, X, Send } from 'lucide-react';
+import { MessageCircle, X, Send, User, Phone } from 'lucide-react';
 
-export default function FloatingWhatsApp() {
+export default function FloatingWhatsApp({ adminWaList = [] }) {
   const [isOpen, setIsOpen] = useState(false);
   const [pesan, setPesan] = useState('');
 
-  const handleSend = (e) => {
-    e.preventDefault();
-    const noWA = "6281234567890";
-    const defaultText = pesan || "Halo Admin BosAuto Rental, saya ingin bertanya ketersediaan armada mobil.";
+  const safeList = Array.isArray(adminWaList) && adminWaList.length > 0
+    ? adminWaList
+    : [{ id: 'def-1', namaCs: 'Admin CS 24 Jam', noHp: '6281234567890', jabatan: 'Customer Care' }];
+
+  const handleSendToCs = (cs) => {
+    const noWA = cs.noHp || '6281234567890';
+    const defaultText = pesan || `Halo ${cs.namaCs}, saya ingin bertanya mengenai sewa mobil di BosAuto Rental.`;
     const url = `https://api.whatsapp.com/send?phone=${noWA}&text=${encodeURIComponent(defaultText)}`;
     window.open(url, '_blank');
     setIsOpen(false);
@@ -17,10 +20,10 @@ export default function FloatingWhatsApp() {
 
   return (
     <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 999 }}>
-      {/* Pop-up Chat Card */}
+      {/* Pop-up Multi-Admin Chat Card */}
       {isOpen && (
         <div className="glass-panel" style={{
-          width: '300px',
+          width: '320px',
           padding: '16px',
           marginBottom: '12px',
           boxShadow: '0 10px 25px rgba(0,0,0,0.5)',
@@ -32,7 +35,7 @@ export default function FloatingWhatsApp() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', borderBottom: '1px solid var(--border-color)', paddingBottom: '8px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: 'var(--status-available)', display: 'inline-block' }}></span>
-              <strong style={{ fontSize: '0.9rem' }}>CS BosAuto Standby</strong>
+              <strong style={{ fontSize: '0.9rem' }}>Pilih Admin CS WA</strong>
             </div>
             <button onClick={() => setIsOpen(false)} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}>
               <X size={18} />
@@ -40,22 +43,45 @@ export default function FloatingWhatsApp() {
           </div>
 
           <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginBottom: '12px', lineHeight: 1.4 }}>
-            Halo! Ada yang bisa kami bantu mengenai sewa mobil hari ini? 🚗
+            Halo! Pilih salah satu Tim CS Admin kami yang sedang online untuk berkonsultasi:
           </p>
 
-          <form onSubmit={handleSend}>
-            <input
-              type="text"
-              placeholder="Tulis pesan pertanyaan..."
-              className="form-input"
-              style={{ fontSize: '0.85rem', marginBottom: '8px' }}
-              value={pesan}
-              onChange={(e) => setPesan(e.target.value)}
-            />
-            <button type="submit" className="btn btn-success" style={{ width: '100%', padding: '8px', fontSize: '0.85rem' }}>
-              <Send size={14} /> Kirim ke WhatsApp
-            </button>
-          </form>
+          {/* List Multi-Admin Buttons */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '12px' }}>
+            {safeList.map((cs) => (
+              <button
+                key={cs.id}
+                onClick={() => handleSendToCs(cs)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '10px 12px',
+                  background: 'rgba(255,255,255,0.05)',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: '10px',
+                  color: 'var(--text-main)',
+                  cursor: 'pointer',
+                  textAlign: 'left',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <div style={{ background: 'rgba(16,185,129,0.15)', padding: '6px', borderRadius: '50%' }}>
+                    <User size={16} color="var(--status-available)" />
+                  </div>
+                  <div>
+                    <strong style={{ fontSize: '0.85rem', display: 'block' }}>{cs.namaCs}</strong>
+                    <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>{cs.jabatan || 'CS Online'}</span>
+                  </div>
+                </div>
+
+                <div style={{ background: 'var(--status-available)', padding: '6px', borderRadius: '8px', color: '#fff' }}>
+                  <Phone size={14} />
+                </div>
+              </button>
+            ))}
+          </div>
         </div>
       )}
 
@@ -76,7 +102,7 @@ export default function FloatingWhatsApp() {
           boxShadow: '0 4px 16px rgba(16, 185, 129, 0.4)',
           transition: 'transform 0.2s ease'
         }}
-        title="Chat WhatsApp CS 24 Jam"
+        title="Chat WhatsApp Multi CS Admin 24 Jam"
       >
         <MessageCircle size={28} />
       </button>

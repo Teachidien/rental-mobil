@@ -1,5 +1,5 @@
 import React from 'react';
-import { Car, LayoutDashboard, Calendar, DollarSign, LogOut, ArrowLeft } from 'lucide-react';
+import { Car, LayoutDashboard, Calendar, DollarSign, LogOut, ArrowLeft, Phone } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export default function AdminDashboard({ onLogout, activeTab, setActiveTab, children }) {
@@ -18,7 +18,8 @@ export default function AdminDashboard({ onLogout, activeTab, setActiveTab, chil
     { id: 'overview', label: 'Overview', icon: LayoutDashboard },
     { id: 'armada', label: 'Manajemen Armada', icon: Car },
     { id: 'jadwal', label: 'Jadwal Rental', icon: Calendar },
-    { id: 'pembukuan', label: 'Pembukuan', icon: DollarSign }
+    { id: 'pembukuan', label: 'Pembukuan', icon: DollarSign },
+    { id: 'wa_admin', label: 'Kontak CS WA', icon: Phone }
   ];
 
   return (
