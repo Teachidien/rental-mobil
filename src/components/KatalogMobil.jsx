@@ -82,7 +82,7 @@ export default function KatalogMobil({ armadaList = [], onSelectMobil }) {
               display: 'flex',
               flexDirection: 'column'
             }}>
-              {/* Foto Unit Armada + Status Badge Overlay */}
+              {/* Foto Unit Armada */}
               <div style={{ height: '190px', width: '100%', position: 'relative', overflow: 'hidden', backgroundColor: '#e2e8f0' }}>
                 <img
                   src={mobil.gambar || 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=800&q=80'}
@@ -93,22 +93,19 @@ export default function KatalogMobil({ armadaList = [], onSelectMobil }) {
                   }}
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
-                <span className={`badge ${mobil.status === 'Tersedia' ? 'badge-available' : mobil.status === 'Disewa' ? 'badge-rented' : 'badge-maintenance'}`} style={{
-                  position: 'absolute',
-                  top: '12px',
-                  left: '12px',
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-                }}>
-                  {mobil.status === 'Tersedia' ? '🟢 TERSEDIA' : mobil.status === 'Disewa' ? '🔴 DISEWA' : '🟡 SERVICE'}
-                </span>
               </div>
 
               {/* Detail Info Armada */}
               <div style={{ padding: '18px', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <div>
-                  <h3 style={{ fontSize: '1.15rem', color: 'var(--text-main)', margin: '0 0 6px 0', fontWeight: 700 }}>
-                    {mobil.nama || 'Mobil Rental'}
-                  </h3>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', marginBottom: '6px' }}>
+                    <h3 style={{ fontSize: '1.15rem', color: 'var(--text-main)', margin: 0, fontWeight: 700 }}>
+                      {mobil.nama || 'Mobil Rental'}
+                    </h3>
+                    <span className={`badge ${mobil.status === 'Tersedia' ? 'badge-available' : mobil.status === 'Disewa' ? 'badge-rented' : 'badge-maintenance'}`} style={{ fontSize: '0.72rem', padding: '3px 8px', whiteSpace: 'nowrap' }}>
+                      {mobil.status === 'Tersedia' ? '🟢 TERSEDIA' : mobil.status === 'Disewa' ? '🔴 DISEWA' : '🟡 SERVICE'}
+                    </span>
+                  </div>
 
                   <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', margin: '0 0 16px 0' }}>
                     {mobil.tipe || 'MPV'} • {mobil.kapasitas || 7} Seats • {mobil.transmisi || 'Automatic'}
