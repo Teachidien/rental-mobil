@@ -1,32 +1,35 @@
 :root {
-  /* Color Palette - Premium Modern Dark Mode Base with Sleek Blue Accent */
-  --bg-primary: #0b0f19;
-  --bg-secondary: #131c2e;
-  --bg-card: rgba(255, 255, 255, 0.03);
-  --bg-card-hover: rgba(255, 255, 255, 0.06);
-  --border-color: rgba(255, 255, 255, 0.08);
-  --border-highlight: rgba(59, 130, 246, 0.4);
+  /* Color Palette - Executive Light Mode (Stitch AI Design Tokens) */
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f1f5f9;
+  --border-color: #e2e8f0;
+  --border-highlight: #059669;
 
-  --accent-primary: #2563eb;
-  --accent-primary-hover: #1d4ed8;
-  --accent-glow: rgba(37, 99, 235, 0.25);
-  --accent-secondary: #06b6d4;
+  /* Color Palette Exact Tokens */
+  --accent-primary: #059669;       /* Emerald Green Primary */
+  --accent-primary-hover: #047857; /* Dark Emerald */
+  --accent-glow: rgba(5, 150, 105, 0.12);
+  --accent-secondary: #1e3a8a;     /* Executive Navy Blue */
+  --accent-tertiary: #cd845f;      /* Terracotta Warm Accent */
 
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-  --text-dim: #64748b;
+  --text-main: #0f172a;            /* Dark Charcoal Navy Body */
+  --text-muted: #64748b;           /* Muted Slate Gray */
+  --text-dim: #94a3b8;
 
-  --status-available: #10b981;
-  --status-rented: #ef4444;
-  --status-maintenance: #f59e0b;
+  --status-available: #059669;
+  --status-rented: #dc2626;
+  --status-maintenance: #cd845f;
 
   /* Spacing & Radius */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
   --transition-fast: 0.2s ease;
   --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --box-shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
 }
 
 /* Global Reset */
@@ -34,7 +37,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 body {
@@ -53,105 +56,68 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.02em;
 }
 
-/* Glassmorphic Container */
+/* Glassmorphic Container -> Executive Light Card */
 .glass-panel {
   background: var(--bg-card);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
 }
 
-/* Buttons */
+/* Button System */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   padding: 10px 20px;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 600;
   border-radius: var(--radius-sm);
   border: none;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: var(--transition-fast);
   text-decoration: none;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  background-color: var(--accent-primary);
   color: #ffffff;
-  box-shadow: 0 4px 14px var(--accent-glow);
 }
 
 .btn-primary:hover {
+  background-color: var(--accent-primary-hover);
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.05);
+  background-color: #ffffff;
   color: var(--text-main);
   border: 1px solid var(--border-color);
 }
 
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: var(--text-muted);
+  background-color: #f1f5f9;
+  border-color: #cbd5e1;
 }
 
 .btn-success {
-  background: #059669;
+  background-color: #059669;
   color: #ffffff;
 }
 
 .btn-success:hover {
-  background: #047857;
+  background-color: #047857;
 }
 
-/* Badges */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  border-radius: 999px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.badge-available {
-  background: rgba(16, 185, 129, 0.15);
-  color: var(--status-available);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-}
-
-.badge-rented {
-  background: rgba(239, 68, 68, 0.15);
-  color: var(--status-rented);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-}
-
-.badge-maintenance {
-  background: rgba(245, 158, 11, 0.15);
-  color: var(--status-maintenance);
-  border: 1px solid rgba(245, 158, 11, 0.3);
-}
-
-/* Form Inputs */
+/* Form Control Utilities */
 .form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
   margin-bottom: 16px;
 }
 
 .form-label {
+  display: block;
   font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--text-muted);
 }
 
 .form-input, .form-select, .form-textarea {
