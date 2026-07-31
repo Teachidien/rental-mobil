@@ -79,45 +79,6 @@ export default function Pembukuan({ pembukuanList = [], onRefresh }) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-      {/* Financial Summary Cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px' }}>
-        <div className="glass-panel" style={{ padding: '20px', borderLeft: '4px solid var(--status-available)' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div>
-              <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Total Pemasukan</span>
-              <h3 style={{ fontSize: '1.5rem', marginTop: '4px', color: 'var(--status-available)' }}>
-                Rp {totalPemasukan.toLocaleString('id-ID')}
-              </h3>
-            </div>
-            <div style={{ background: 'rgba(16,185,129,0.15)', padding: '10px', borderRadius: '12px' }}>
-              <TrendingUp color="var(--status-available)" size={24} />
-            </div>
-          </div>
-        </div>
-
-        <div className="glass-panel" style={{ padding: '20px', borderLeft: '4px solid var(--status-rented)' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div>
-              <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Total Pengeluaran</span>
-              <h3 style={{ fontSize: '1.5rem', marginTop: '4px', color: 'var(--status-rented)' }}>
-                Rp {totalPengeluaran.toLocaleString('id-ID')}
-              </h3>
-            </div>
-            <div style={{ background: 'rgba(239,68,68,0.15)', padding: '10px', borderRadius: '12px' }}>
-              <TrendingDown color="var(--status-rented)" size={24} />
-            </div>
-          </div>
-        </div>
-
-        <div className="glass-panel" style={{ padding: '20px', borderLeft: '4px solid var(--accent-secondary)' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div>
-              <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Estimasi Laba Bersih</span>
-              <h3 style={{ fontSize: '1.5rem', marginTop: '4px', color: 'var(--accent-secondary)' }}>
-                Rp {labaBersih.toLocaleString('id-ID')}
-              </h3>
-            </div>
-            <div style={{ background: 'rgba(6,182,212,0.15)', padding: '10px', borderRadius: '12px' }}>
       {/* Header Bar & Actions Buttons */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
         <div>

@@ -113,9 +113,25 @@ export default function AdminDashboard({ onLogout, activeTab, setActiveTab, chil
         </div>
       </aside>
 
-          <button onClick={handleLogout} className="btn btn-secondary" style={{ fontSize: '0.85rem' }}>
-            <ArrowLeft size={15} /> Lihat Tampilan Publik
-          </button>
+      {/* Main Admin Content View Area */}
+      <main style={{ flex: 1, padding: '32px 40px', overflowY: 'auto', background: '#f8fafc' }}>
+        {/* Top Header Bar */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '28px' }}>
+          <h2 style={{ fontSize: '1.6rem', color: '#047857', margin: 0, fontWeight: 800 }}>
+            {activeTab === 'overview' ? 'Dashboard Overview' :
+             activeTab === 'armada' ? 'Manajemen Armada Kendaraan' :
+             activeTab === 'jadwal' ? 'Penjadwalan & Log Sewa' :
+             activeTab === 'pembukuan' ? 'Pembukuan Keuangan' : 'Pengaturan Kontak WA'}
+          </h2>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <span className="badge badge-available" style={{ padding: '6px 12px', fontSize: '0.8rem' }}>
+              🟢 Live System: Stable
+            </span>
+            <button onClick={handleLogout} className="btn btn-secondary" style={{ fontSize: '0.85rem' }}>
+              <ArrowLeft size={15} /> Lihat Publik
+            </button>
+          </div>
         </div>
 
         {children}

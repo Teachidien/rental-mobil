@@ -151,3 +151,20 @@ export const getAdminWaList = async () => {
     return [];
   }
 };
+
+export const addWaAdmin = async (waData) => {
+  return await addDoc(collection(db, 'admin_wa'), {
+    ...waData,
+    createdAt: serverTimestamp()
+  });
+};
+
+export const updateWaAdmin = async (id, updatedData) => {
+  const adminRef = doc(db, 'admin_wa', id);
+  return await updateDoc(adminRef, updatedData);
+};
+
+export const deleteWaAdmin = async (id) => {
+  const adminRef = doc(db, 'admin_wa', id);
+  return await deleteDoc(adminRef);
+};

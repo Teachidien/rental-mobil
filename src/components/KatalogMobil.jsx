@@ -67,6 +67,7 @@ export default function KatalogMobil({ armadaList = [], onSelectMobil }) {
                 {transmisi}
               </button>
             ))}
+          </div>
         </div>
 
         {/* Grid Kartu Armada Light Mode */}
