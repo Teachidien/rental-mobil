@@ -23,26 +23,28 @@ export default function AdminDashboard({ onLogout, activeTab, setActiveTab, chil
   ];
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', background: 'var(--bg-primary)' }}>
-      {/* Admin Sidebar */}
+    <div style={{ minHeight: '100vh', display: 'flex', background: '#f8fafc', color: '#0f172a' }}>
+      {/* Admin Sidebar Light Executive */}
       <aside style={{
         width: '260px',
-        borderRight: '1px solid var(--border-color)',
+        borderRight: '1px solid #e2e8f0',
         padding: '24px 16px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        background: 'var(--bg-secondary)'
+        background: '#ffffff'
       }}>
         <div>
           {/* Admin Brand */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '32px', paddingLeft: '8px' }}>
-            <div style={{ background: 'var(--accent-primary)', padding: '6px', borderRadius: '8px' }}>
-              <Car color="#fff" size={20} />
+            <div style={{ background: '#059669', padding: '8px', borderRadius: '8px' }}>
+              <Car color="#ffffff" size={20} />
             </div>
             <div>
-              <h4 style={{ margin: 0, fontSize: '1.05rem' }}>BosAuto <span style={{ color: 'var(--accent-secondary)' }}>Admin</span></h4>
-              <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Management System</span>
+              <h4 style={{ margin: 0, fontSize: '1.05rem', color: '#1e3a8a', fontWeight: 800 }}>
+                Admin Panel
+              </h4>
+              <span style={{ fontSize: '0.7rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em' }}>FLEET OPERATIONS</span>
             </div>
           </div>
 
@@ -59,19 +61,19 @@ export default function AdminDashboard({ onLogout, activeTab, setActiveTab, chil
                     display: 'flex',
                     alignItems: 'center',
                     gap: '12px',
-                    padding: '10px 14px',
-                    borderRadius: 'var(--radius-sm)',
+                    padding: '12px 14px',
+                    borderRadius: '8px',
                     border: 'none',
-                    background: isActive ? 'var(--accent-glow)' : 'transparent',
-                    color: isActive ? 'var(--accent-secondary)' : 'var(--text-muted)',
-                    fontWeight: isActive ? 600 : 400,
+                    background: isActive ? '#059669' : 'transparent',
+                    color: isActive ? '#ffffff' : '#64748b',
+                    fontWeight: isActive ? 700 : 500,
                     cursor: 'pointer',
-                    fontSize: '0.9rem',
+                    fontSize: '0.88rem',
                     textAlign: 'left',
-                    transition: 'all 0.2s ease'
+                    transition: 'all 0.15s ease'
                   }}
                 >
-                  <Icon size={18} />
+                  <Icon size={18} color={isActive ? '#ffffff' : '#64748b'} />
                   <span>{item.label}</span>
                 </button>
               );
@@ -79,30 +81,37 @@ export default function AdminDashboard({ onLogout, activeTab, setActiveTab, chil
           </nav>
         </div>
 
-        {/* User Info & Actions */}
-        <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '16px' }}>
-          <div style={{ fontSize: '0.78rem', color: 'var(--text-dim)', marginBottom: '12px', paddingLeft: '8px' }}>
-            Logged in as: <strong style={{ color: 'var(--text-main)', display: 'block' }}>{currentUser?.email || 'admin@bosauto.id'}</strong>
-          </div>
-
+        {/* User Info & Back to Public Button */}
+        <div>
           <button
-            onClick={handleLogout}
+            onClick={() => window.location.reload()}
             className="btn btn-secondary"
-            style={{ width: '100%', justifyContent: 'flex-start', color: 'var(--status-rented)' }}
+            style={{ width: '100%', marginBottom: '16px', fontSize: '0.82rem', padding: '8px' }}
           >
-            <LogOut size={16} /> Keluar Admin
+            <ArrowLeft size={14} /> Lihat Tampilan Publik
           </button>
+
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            paddingTop: '16px',
+            borderTop: '1px solid #e2e8f0'
+          }}>
+            <div>
+              <strong style={{ fontSize: '0.85rem', color: '#0f172a', display: 'block' }}>Admin User</strong>
+              <span style={{ fontSize: '0.72rem', color: '#64748b' }}>Fleet Manager</span>
+            </div>
+            <button
+              onClick={handleLogout}
+              style={{ background: 'none', border: 'none', color: '#dc2626', cursor: 'pointer', padding: '4px' }}
+              title="Keluar Admin"
+            >
+              <LogOut size={18} />
+            </button>
+          </div>
         </div>
       </aside>
-
-      {/* Main Admin Content Area */}
-      <main style={{ flex: 1, padding: '32px', overflowY: 'auto' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-          <h2 style={{ textTransform: 'capitalize' }}>
-            {activeTab === 'overview' ? 'Dashboard Overview' : 
-             activeTab === 'armada' ? 'Manajemen Armada Kendaraan' : 
-             activeTab === 'jadwal' ? 'Penjadwalan & Log Sewa' : 'Pembukuan Keuangan'}
-          </h2>
 
           <button onClick={handleLogout} className="btn btn-secondary" style={{ fontSize: '0.85rem' }}>
             <ArrowLeft size={15} /> Lihat Tampilan Publik
